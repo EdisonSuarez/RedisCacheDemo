@@ -1,7 +1,7 @@
-using CacheManager;
 using Microsoft.EntityFrameworkCore;
 using RedisCacheDemo.Context;
 using Redis = StackExchange.Redis;
+using CacheManager;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
