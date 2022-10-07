@@ -27,20 +27,20 @@ namespace RedisCacheDemo.Controllers
             var data = _cache.GetCacheValueAsync<Ciudades>("Cities");
             if (data.Result is null)
             {
-                var cities = await GetCities();
+                var cities = await GetCitiesFromSource();
                 await _cache.SetCacheValueAsync("Cities", JsonSerializer.Serialize(cities));
                 return _cache.GetCacheValueAsync<Ciudades>("Cities").Result;
             }
             return data.Result;
 
             /******** FANCY CODE BONUS TRACK ***************/
-            //return await _cache.GetOrAdd<Ciudades>("Cities", () => { return GetCities(); });
+            //return await _cache.GetOrAdd<Ciudades>("Cities", () => { return GetCitiesFromSource(); });
         }
 
         [HttpGet(template: "GetCitiesNoCache")]
         public async Task<List<Ciudades>> GetCitiesNoCache()
         {
-            return await GetCities();
+            return await GetCitiesFromSource();
         }
 
         // GET api/<CitiesController>/5
@@ -68,7 +68,7 @@ namespace RedisCacheDemo.Controllers
         {
         }
 
-        private async Task<List<Ciudades>> GetCities()
+        private async Task<List<Ciudades>> GetCitiesFromSource()
         {
             return await _dbContext.tbCiudades.ToListAsync();
         }
