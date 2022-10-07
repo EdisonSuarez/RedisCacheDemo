@@ -21,7 +21,7 @@ namespace RedisCacheDemo.Controllers
             _dbContext = dbContext;
             _cache = cache;
         }
-        [HttpGet(template: "GetiCitiesWithCache")]
+        [HttpGet(template: "GetCitiesWithCache")]
         public async Task<List<Ciudades>> Get()
         {
             var data = _cache.GetCacheValueAsync<Ciudades>("Cities");
@@ -32,10 +32,13 @@ namespace RedisCacheDemo.Controllers
                 return _cache.GetCacheValueAsync<Ciudades>("Cities").Result;
             }
             return data.Result;
+
+            /******** FANCY CODE BONUS TRACK ***************/
+            //return await _cache.GetOrAdd<Ciudades>("Cities", () => { return GetCities(); });
         }
 
         [HttpGet(template: "GetCitiesNoCache")]
-        public  async Task<List<Ciudades>> GetCitiesNoCache()
+        public async Task<List<Ciudades>> GetCitiesNoCache()
         {
             return await GetCities();
         }
