@@ -22,7 +22,7 @@ namespace RedisCacheDemo.Controllers
             _cache = cache;
         }
         [HttpGet(template: "GetiCitiesWithCache")]
-        public async Task<IEnumerable<Ciudades>> Get()
+        public async Task<List<Ciudades>> Get()
         {
             var data = _cache.GetCacheValueAsync<Ciudades>("Cities");
             if (data.Result is null)
@@ -35,7 +35,7 @@ namespace RedisCacheDemo.Controllers
         }
 
         [HttpGet(template: "GetCitiesNoCache")]
-        public  async Task<IEnumerable<Ciudades>> GetCitiesNoCache()
+        public  async Task<List<Ciudades>> GetCitiesNoCache()
         {
             return await GetCities();
         }
