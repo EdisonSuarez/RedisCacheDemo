@@ -24,17 +24,17 @@ namespace RedisCacheDemo.Controllers
         [HttpGet(template: "GetCitiesWithCache")]
         public async Task<List<Ciudades>> Get()
         {
-            var data = _cache.GetCacheValueAsync<Ciudades>("Cities");
-            if (data.Result is null)
-            {
-                var cities = await GetCitiesFromSource();
-                await _cache.SetCacheValueAsync("Cities", JsonSerializer.Serialize(cities));
-                return _cache.GetCacheValueAsync<Ciudades>("Cities").Result;
-            }
-            return data.Result;
+            //var data = _cache.GetCacheValueAsync<Ciudades>("Cities");
+            //if (data.Result is null)
+            //{
+            //    var cities = await GetCitiesFromSource();
+            //    await _cache.SetCacheValueAsync("Cities", JsonSerializer.Serialize(cities));
+            //    return _cache.GetCacheValueAsync<Ciudades>(key: "Cities").Result;
+            //}
+            //return data.Result;
 
             /******** FANCY CODE BONUS TRACK ***************/
-            //return await _cache.GetOrAdd<Ciudades>("Cities", () => { return GetCitiesFromSource(); });
+            return await _cache.GetOrAdd<Ciudades>("Cities", () => { return GetCitiesFromSource(); });
         }
 
         [HttpGet(template: "GetCitiesNoCache")]
